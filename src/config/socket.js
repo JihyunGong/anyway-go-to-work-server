@@ -37,6 +37,7 @@ exports.socketIo = (server) => {
           scrum: "",
           status: "",
           photo: "",
+          player: {},
         };
 
         io.to(companyId).emit("employeeData", {
@@ -114,7 +115,6 @@ exports.socketIo = (server) => {
         });
 
         socket.on("disconnect", () => {
-          // if (isJoinedPlayer(socket.id)) {
           const roomID = socketToVideoChatSpace[socket.id];
 
           if (videoChatParticipants[roomID]) {
@@ -126,13 +126,6 @@ exports.socketIo = (server) => {
           delete socketToVideoChatSpace[socket.id];
 
           socket.broadcast.emit("participantLeft", socket.id);
-
-          // const leftPlayer = playerLeave(socket.id);
-
-          // socket.to(roomID).emit("playerLeaveRoom", leftPlayer);
-
-          // socket.leave(roomID);
-          // }
         });
       })
     );
